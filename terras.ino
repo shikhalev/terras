@@ -10,6 +10,7 @@ void setup() {
   Serial.begin(9600);
 
   sensors.begin();
+  Status::begin();
   
   if (Serial) {
     Serial.println("Initialized");

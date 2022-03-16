@@ -1,9 +1,6 @@
 #include "status.h"
 
 byte _value;
-byte _red_pin;
-byte _green_pin;
-byte _blue_pin;
 
 void Status::set(byte value) {
   if (Serial) {
@@ -39,42 +36,53 @@ void Status::set(byte value) {
   _value = value;
 }
 
-byte Status::get() {
+inline byte Status::get() {
   return _value;
 }
 
-bool Status::red() {
+inline bool Status::red() {
   return (_value & RED) != 0;
 }
 
-bool Status::green() {
+inline bool Status::green() {
   return (_value & GREEN) != 0;
 }
 
-bool Status::blue() {
+inline bool Status::blue() {
   return (_value & BLUE) != 0;
 }
 
-bool Status::blink() {
+inline bool Status::blink() {
   return (_value & BLINK) != 0;
 }
+
+byte _red_pin;
+byte _green_pin;
+byte _blue_pin;
 
 void Status::begin(byte red_pin, byte green_pin, byte blue_pin) {
   _red_pin = red_pin;
   _green_pin = green_pin;
   _blue_pin = blue_pin;
+  pinMode(_red_pin, OUTPUT);
+  pinMode(_green_pin, OUTPUT);
+  pinMode(_blue_pin, OUTPUT);
+}
+
+void Status::begin() {
+  begin(PIN_RED, PIN_GREEN, PIN_BLUE);
 }
 
 void Status::tick() {
-  static bool _state = false;
-  bool r = (_value & RED) != 0;
-  bool g = (_value & GREEN) != 0;
-  bool b = (_value & BLUE) != 0;
-  if ((_value & BLINK) != 0) {
-    r = r && _state;
-    g = g && _state;
-    b = b && _state;
-    _state = !_state;
+  static bool state = true;
+  bool r = red();
+  bool g = green();
+  bool b = blue();
+  if (blink()) {
+    r = r && state;
+    g = g && state;
+    b = b && state;
+    state = !state;
   }
   digitalWrite(_red_pin, r);
   digitalWrite(_green_pin, g);

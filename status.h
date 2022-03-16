@@ -17,18 +17,23 @@
 #define STATUS_WARNING        ( YELLOW          )
 #define STATUS_DANGEROUS      ( RED     | BLINK )
 
+#define PIN_RED   4
+#define PIN_GREEN 5
+#define PIN_BLUE  6
+
 class Status {
   public:
     static void set(byte value);
-    static byte get();
+    inline static byte get();
 
   public:
-    static bool red();
-    static bool green();
-    static bool blue();
-    static bool blink();
+    inline static bool red();
+    inline static bool green();
+    inline static bool blue();
+    inline static bool blink();
 
   public:
     static void begin(byte red_pin, byte green_pin, byte blue_pin);
+    static void begin();
     static void tick();
 };
