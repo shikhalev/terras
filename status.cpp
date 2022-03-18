@@ -84,7 +84,7 @@ void Status::tick() {
     b = b && state;
     state = !state;
   }
-  digitalWrite(_red_pin, r);
-  digitalWrite(_green_pin, g);
-  digitalWrite(_blue_pin, b);
+  digitalWrite(_red_pin, !r);
+  digitalWrite(_green_pin, !g);
+  digitalWrite(_blue_pin, !b);
 }
