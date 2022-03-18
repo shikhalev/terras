@@ -1,25 +1,25 @@
 #include "limits.h"
 
 void Limits::validate(float temperature, float humidity) {
-  if (temperature < HUMIDITY_CRIT_LOW || temperature > HUMIDITY_CRIT_HIGH) {
+  if (temperature < TEMPERATURE_CRIT_LOW || temperature > TEMPERATURE_CRIT_HIGH) {
     if (Serial) {
       Serial.print(F("DANGEROUS: Temperature value = "));
       Serial.print(temperature, 2);
       Serial.print(F(", must be in "));
-      Serial.print(HUMIDITY_CRIT_LOW);
+      Serial.print(TEMPERATURE_CRIT_LOW);
       Serial.print(F(".."));
-      Serial.print(HUMIDITY_CRIT_HIGH);
-      Serial.println(".");
+      Serial.print(TEMPERATURE_CRIT_HIGH);
+      Serial.println(F("."));
     }
     Status::set(STATUS_DANGEROUS);
-  } else if (temperature < HUMIDITY_WARN_LOW || temperature > HUMIDITY_WARN_HIGH) {
+  } else if (temperature < TEMPERATURE_WARN_LOW || temperature > TEMPERATURE_WARN_HIGH) {
     if (Serial) {
       Serial.print(F("WARNING: Temperature value = "));
       Serial.print(temperature, 2);
       Serial.print(F(", must be in "));
-      Serial.print(HUMIDITY_WARN_LOW);
+      Serial.print(TEMPERATURE_WARN_LOW);
       Serial.print(F(".."));
-      Serial.print(HUMIDITY_WARN_HIGH);
+      Serial.print(TEMPERATURE_WARN_HIGH);
       Serial.println(F("."));
     }
     Status::set(STATUS_WARNING);
