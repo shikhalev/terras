@@ -1,8 +1,8 @@
 {
     "configuration": "cpu=atmega328old",
     "board": "arduino:avr:nano",
-    "output": "../build",
+    "output": "./build",
     "programmer": "arduino:avrispmkii",
     "port": "/dev/ttyUSB0",
-    "sketch": "terras.ino"
+    "sketch": "terras/terras.ino"
 }
