@@ -1,6 +1,6 @@
 #include "status.h"
 
-byte _value;
+static byte _value;
 
 void Status::set(byte value) {
   if (Serial) {
@@ -56,9 +56,9 @@ inline bool Status::blink() {
   return (_value & BLINK) != 0;
 }
 
-byte _red_pin;
-byte _green_pin;
-byte _blue_pin;
+static byte _red_pin;
+static byte _green_pin;
+static byte _blue_pin;
 
 void Status::begin(byte red_pin, byte green_pin, byte blue_pin) {
   _red_pin = red_pin;

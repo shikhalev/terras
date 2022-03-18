@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Arduino.h>
 
 #define RED   0b0001

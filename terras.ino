@@ -4,13 +4,13 @@
 
 #include "sensors.h"
 
-Sensors sensors;
-
 void setup() {
   Serial.begin(9600);
 
-  sensors.begin();
   Status::begin();
+  Sensors::begin();
+
+  Sensors::scan();
   
   if (Serial) {
     Serial.println("Initialized");
@@ -19,5 +19,5 @@ void setup() {
 }
 
 void loop() {
-  sensors.tick();
+  Sensors::tick();
 }
