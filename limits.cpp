@@ -57,7 +57,7 @@ void Limits::validate(uint16_t co2) {
       Serial.print(co2, DEC);
       Serial.print(F(", must be <= "));
       Serial.print(CO2_CRIT_HIGH);
-      Serial.print(F("."));
+      Serial.println(F("."));
     }
     Status::set(STATUS_DANGEROUS);
   } else if (co2 > CO2_WARN_HIGH) {
@@ -66,7 +66,7 @@ void Limits::validate(uint16_t co2) {
       Serial.print(co2, DEC);
       Serial.print(F(", must be <= "));
       Serial.print(CO2_WARN_HIGH);
-      Serial.print(F("."));
+      Serial.println(F("."));
     }
     Status::set(STATUS_WARNING);
   }
