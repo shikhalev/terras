@@ -1,8 +1,6 @@
 #pragma once
 
 #include <Arduino.h>
-#include <avr/io.h>
-#include <avr/interrupt.h>
 
 #define RED   0b0001
 #define GREEN 0b0010
