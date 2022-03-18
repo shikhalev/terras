@@ -13,7 +13,7 @@ void setup() {
   Sensors::scan();
   
   if (Serial) {
-    Serial.println("Initialized");
+    Serial.println(F("Initialized"));
     // TODO: обработать вероятные ошибки
   }
 }

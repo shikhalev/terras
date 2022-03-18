@@ -4,31 +4,31 @@ static byte _value;
 
 void Status::set(byte value) {
   if (Serial) {
-    Serial.print("Set status = ");
+    Serial.print(F("Set status = "));
     switch (value) {
       case STATUS_INIT: 
-        Serial.println("STATUS_INIT");
+        Serial.println(F("STATUS_INIT"));
         break;
       case STATUS_OK:
-        Serial.println("STATUS_OK");
+        Serial.println(F("STATUS_OK"));
         break;
       case STATUS_NO_SENSORS:
-        Serial.println("STATUS_NO_SENSORS");
+        Serial.println(F("STATUS_NO_SENSORS"));
         break;
       case STATUS_SENSOR_ERROR:
-        Serial.println("STATUS_SENSOR_ERROR");
+        Serial.println(F("STATUS_SENSOR_ERROR"));
         break;
       case STATUS_DISPLAY_ERROR:
-        Serial.println("STATUS_DISPLAY_ERROR");
+        Serial.println(F("STATUS_DISPLAY_ERROR"));
         break;
       case STATUS_WARNING:
-        Serial.println("STATUS_WARNING");
+        Serial.println(F("STATUS_WARNING"));
         break;
       case STATUS_DANGEROUS:
-        Serial.println("STATUS_DANGEROUS");
+        Serial.println(F("STATUS_DANGEROUS"));
         break;
       default:
-        Serial.print("0b");
+        Serial.print(F("0b"));
         Serial.println(value, BIN);
     }
     Serial.flush();

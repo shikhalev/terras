@@ -14,13 +14,25 @@
 #define ERROR_SHT2X 0b0100
 #define ERROR_SGP30 0b1000
 
-struct Data {
-  byte flags;
+struct SHT20_data {
   float temperature;
   float humidity;
+};
+
+union SHT20_info {
+  SHT20_data data;
+  int error;
+};
+
+union SGP30_info {
   uint16_t co2;
-  int sht_error;
-  int sgp_error;
+  int error;
+};
+
+struct Data {
+  byte flags;
+  SHT20_info sht20;
+  SGP30_info sgp30;
 };
 
 class Sensors {
