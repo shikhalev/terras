@@ -7,19 +7,16 @@ static byte sht_mask;
 static byte sgp_mask;
 
 static TCA9548A MX;
-static SHT2x SHT;
-static SGP30 SGP;
+static SHT2x sht_sensors[8];
+static SGP30 sgp_sensors[8];
 
 #define MAX_CHANNEL 7
 
-void Sensors::scan() {
+void Sensors::reset() {
   Status::set(STATUS_INIT);
   sht_mask = 0;
   sgp_mask = 0;
   MX.closeAll();
-
-  bool sht_started = false;
-  bool sgp_started = false;
 
   byte sht_count = 0;
   byte sgp_count = 0;
@@ -28,15 +25,16 @@ void Sensors::scan() {
     byte neg_mask = ~mask;
     byte error;
     MX.openChannel(channel);
+
+    SHT2x &SHT = sht_sensors[channel];
+    SGP30 &SGP = sgp_sensors[channel];
     
     Wire.beginTransmission(SHT2x_ADDRESS);
     error = Wire.endTransmission();
     if (error == 0) {
       sht_mask |= mask;
-      if (!sht_started) { 
-        SHT.begin(); 
-        sht_started = true; 
-      }
+      SHT.begin(); 
+      SHT.reset();
       if (Serial) {
         Serial.print(F("Found SHT2x sensor at channel "));
         Serial.println(channel, DEC);
@@ -50,10 +48,8 @@ void Sensors::scan() {
     error = Wire.endTransmission();
     if (error == 0) {
       sgp_mask |= mask;
-      if (!sgp_started) {
-        SGP.begin();
-        SGP.GenericReset();
-      }
+      SGP.begin();
+      SGP.GenericReset();
       if (Serial) {
         Serial.print(F("Found SGP30 sensor at channel "));
         Serial.print(channel, DEC);
@@ -104,6 +100,9 @@ void Sensors::tick() {
     if (has_sht || has_sgp) {
       float temperature;
       float humidity;
+
+      SHT2x &SHT = sht_sensors[channel];
+      SGP30 &SGP = sgp_sensors[channel];
       
       MX.openChannel(channel);
 
@@ -129,7 +128,7 @@ void Sensors::tick() {
             Serial.print(temperature, 1);
             Serial.print(F(", humidity = "));
             Serial.print(humidity, 1);
-            Serial.print(F("."));
+            Serial.println(F("."));
           }
         } else {
           data[channel].flags &= ~DATA_SHT2X;
@@ -167,7 +166,7 @@ void Sensors::tick() {
             Serial.print(channel, DEC);
             Serial.print(F(": CO2 = "));
             Serial.print(co2, DEC);
-            Serial.print(F("."));
+            Serial.println(F("."));
           }
         } else {
           data[channel].flags &= ~DATA_SGP30;

@@ -10,7 +10,7 @@ void setup() {
   Status::begin();
   Sensors::begin();
 
-  Sensors::scan();
+  Sensors::reset();
   
   if (Serial) {
     Serial.println(F("Initialized"));
@@ -20,4 +20,5 @@ void setup() {
 
 void loop() {
   Sensors::tick();
+  delay(5000);
 }

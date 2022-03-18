@@ -41,5 +41,5 @@ class Sensors {
     static void tick();
 
   public:
-    static void scan();
+    static void reset();
 };
