@@ -19,12 +19,6 @@ void setup() {
   Sensors::reset();
   
   setup_timer();
-
-  if (Serial) {
-    Serial.println(F("Initialized"));
-    Serial.flush();
-    // TODO: обработать вероятные ошибки
-  }
 }
 
 void loop() {
