@@ -89,7 +89,13 @@ void Sensors::begin() {
   MX.begin(Wire);
 }
 
-static volatile Data data[8];
+Data data[8];
+
+Data Sensors::getData(byte channel) {
+//  Data item;
+//  memcpy(&item, &data[channel], sizeof(Data));
+  return data[channel];
+}
 
 void Sensors::tick() {
   Status::set(STATUS_OK);
@@ -105,6 +111,8 @@ void Sensors::tick() {
       SGP30 &SGP = sgp_sensors[channel];
       
       MX.openChannel(channel);
+
+      data[channel].flags = 0;
 
       bool sht_readed = false;
       if (has_sht) {

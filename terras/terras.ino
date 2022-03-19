@@ -2,12 +2,17 @@
    Читаем датчики, пишем на экран и в Serial тож.  
    *** */
 
+// TODO: переупорядочить и сделать два режима вывода в сериал — табличный и отладочный
+// TODO: отключение экрана в экономичном режиме (требует управления)
+
 #include "sensors.h"
 #include "timer.h"
+#include "screen.h"
 
 void setup() {
   Serial.begin(9600);
 
+  Screen::begin();
   Status::begin();
   Sensors::begin();
 
@@ -17,6 +22,7 @@ void setup() {
 
   if (Serial) {
     Serial.println(F("Initialized"));
+    Serial.flush();
     // TODO: обработать вероятные ошибки
   }
 }
@@ -28,6 +34,8 @@ void loop() {
 
 ISR(TIMER1_COMPA_vect) {
   static byte counter = 0;
-  if (++counter % 8 == 0)
-    Status::tick();
+  ++counter;
+  Status::tick();
+  if (counter % 20 == 0)
+    Screen::tick();
 }

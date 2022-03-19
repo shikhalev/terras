@@ -42,4 +42,7 @@ class Sensors {
 
   public:
     static void reset();
+
+  public:
+    static Data getData(byte channel);
 };

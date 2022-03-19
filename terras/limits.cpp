@@ -1,5 +1,7 @@
 #include "limits.h"
 
+// TODO: переделать validate на зоны
+
 void Limits::validate(float temperature, float humidity) {
   if (temperature < TEMPERATURE_CRIT_LOW || temperature > TEMPERATURE_CRIT_HIGH) {
     if (Serial) {
@@ -75,4 +77,31 @@ void Limits::validate(uint16_t co2) {
 void Limits::validate(float temperature, float humidity, uint16_t co2) {
   validate(temperature, humidity);
   validate(co2);
+}
+
+byte Limits::cz(uint16_t co2) {
+  if (co2 > CO2_CRIT_HIGH) 
+    return ZONE_DANGEROUS;
+  else if (co2 > CO2_WARN_HIGH)
+    return ZONE_WARNING;
+  else 
+    return ZONE_NORMAL;
+}
+
+byte Limits::tz(float temperature) {
+  if (temperature < TEMPERATURE_CRIT_LOW || temperature > TEMPERATURE_CRIT_HIGH)
+    return ZONE_DANGEROUS;
+  else if (temperature < TEMPERATURE_WARN_LOW || temperature > TEMPERATURE_WARN_HIGH)
+    return ZONE_WARNING;
+  else
+    return ZONE_NORMAL;
+}
+
+byte Limits::hz(float humidity) {
+  if (humidity < HUMIDITY_CRIT_LOW || humidity > HUMIDITY_CRIT_HIGH)
+    return ZONE_DANGEROUS;
+  else if (humidity < HUMIDITY_WARN_LOW || HUMIDITY_WARN_HIGH)
+    return ZONE_WARNING;
+  else
+    return ZONE_NORMAL;
 }
