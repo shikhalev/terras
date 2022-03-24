@@ -1,6 +1,6 @@
 #include "status.h"
 
-static byte _value;
+static volatile byte _value;
 
 void Status::set(byte value) {
   if (Serial) {
