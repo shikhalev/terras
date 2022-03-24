@@ -9,27 +9,27 @@
 #include "timer.h"
 #include "screen.h"
 
+#define CHECK_DELAY 10000
+
 void setup() {
   Serial.begin(9600);
 
   Screen::begin();
   Status::begin();
   Sensors::begin();
-
   Sensors::reset();
-  
+ 
   setup_timer();
+
+  Screen::tick();
 }
 
 void loop() {
   Sensors::tick();
-  delay(2000);
+  Screen::tick();
+  delay(CHECK_DELAY);
 }
 
 ISR(TIMER1_COMPA_vect) {
-  static byte counter = 0;
-  ++counter;
   Status::tick();
-  if (counter % 20 == 0)
-    Screen::tick();
 }
