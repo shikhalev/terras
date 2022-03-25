@@ -32,8 +32,8 @@ void Screen::tick() {
     tft.print(F(": "));
 
     if ((item.flags & DATA_SHT2X) != 0) {
-      float t = item.sht20.data.temperature;
-      float h = item.sht20.data.humidity;
+      int8_t t = item.sht20.data.temperature;
+      uint8_t h = item.sht20.data.humidity;
       switch (Limits::tz(t))
       {
       case ZONE_DANGEROUS:
@@ -46,7 +46,7 @@ void Screen::tick() {
         tft.setTextColor(ST77XX_GREEN);
         break;
       }
-      tft.print(t, 0);
+      tft.print(t, DEC);
       tft.print(F("'C "));
       switch (Limits::hz(h))
       {
@@ -60,7 +60,7 @@ void Screen::tick() {
         tft.setTextColor(ST77XX_GREEN);
         break;
       }
-      tft.print(h, 0);
+      tft.print(h, DEC);
       tft.print(F("% "));
     } else if ((item.flags & ERROR_SHT2X) != 0) {
       tft.setTextColor(ST77XX_RED);
@@ -83,7 +83,7 @@ void Screen::tick() {
         tft.setTextColor(ST77XX_GREEN);
         break;
       }
-      tft.print(c);
+      tft.print(c, DEC);
       tft.print(F("ppm"));
     } else if ((item.flags & ERROR_SGP30) != 0) {
       tft.setTextColor(ST77XX_RED);

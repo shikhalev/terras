@@ -15,8 +15,8 @@
 #define ERROR_SGP30 0b1000
 
 struct SHT20_data {
-  float temperature;
-  float humidity;
+  int8_t temperature;
+  uint8_t humidity;
 };
 
 union SHT20_info {
